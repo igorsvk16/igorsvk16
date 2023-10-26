@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./../style.css">
+    <title>Сообщения</title>
+    <style>
+        @font-face {
+            font-family: 'versatile';
+            src: url('./../fonts/Versatile-Rust-Bold.otf');
+        }
+        .versatile {
+            font-family: 'versatile';
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- шапка сайта -->
+        <div class="fixed w-full bg-lime-300 border-b-2 border-black p-3 z-10">
+            <nav class="items-center container mx-auto">
+                <div class="flex flex-wrap justify-between w-full">      
+                    <a href="../index.html" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 fill-red-500 stroke-black">
+                            <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>                          
+                        <span class="self-center text-2xl md:text-3xl whitespace-nowrap text-black main-title uppercase tracking-wide underline decoration-dashed underline-offset-4 decoration-2 decoration-black hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-red-800 hover:text-red-800">
+                            ЛОКАЦИЯ
+                        </span>
+                    </a>
+                    <ul class="flex flex-col md:p-0 font-medium md:flex-row md:space-x-8 md:mt-0 md:border-0">
+                        <li>
+                            <a href="../about/index.html" class="block py-2 pr-4 main-font font-bold uppercase hover:underline hover:underline-offset-2 hover:decoration-2 hover:decoration-black" aria-current="page">О проекте</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- конец шапки сайта -->
+        <!-- основной контент -->
+        <div class="bg-yellow-100">
+            <div class="container max-md:px-3 mx-auto" style="min-height: calc( 100vh - 49.62px )">
+                <div class="py-10"></div>
+                <div class="flex justify-between">
+                    <div><h1 id="h1" class="font-bold text-3xl">Отметки: всего </h1></div>
+                    <div class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-6 h-6 fill-black">
+                            <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>  
+                        <h2 id="h2" class="versatile text-xl"></h2>
+                    </div>
+                </div>
+                <div class="py-2"></div>
+                <div id="main-content-div" class="py-2">
+                </div>
+            </div>
+            <!-- подвал -->
+            <footer class="">
+                <div class="w-full bg-lime-300 border-t-2 border-black p-3">
+                    <div class="container mx-auto">
+                        <div class="uppercase font-bold flex flex-wrap justify-between">
+                            <span>2023</span> 
+                            <span>СЛИ</span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- конец подвала -->
+        </div>
+        <!-- конец основного контента -->
+    </main>
+    <script>
+        var data = [
+            {
+                "lat": "61.6722",
+                "lng": "50.8344",
+                "messages": [
+                    {
+                        "title": "Самый лучший институт",
+                        "body": "Кузница инженерных кадров",
+                        "img": [
+                            "img/1.jpg"
+                        ]
+                    },
+                    {
+                        "title": "Студенческое научное объединение",
+                        "body": "Рекомендую студентам СЛИ вступать в СНО и участвовать в конференциях и интеллектуальных играх. Это отличная возможность получить навыки в написании научных работ и развить собственный проект! (фото Николая Мишарина, СЛИ)",
+                        "img": [
+                            "img/2.jpg",
+                            "img/3.jpg"
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6592",
+                "lng": "50.8217",
+                "messages": [
+                    {
+                        "title": "Белки в Мичуринском парке",
+                        "body": "Неожиданное зрелище: сразу две белки в парке в ноябре! Всем, кто любит фотоохоту, рекомендую ловить момент)",
+                        "img": [
+                            "img/4.jpg",
+                            "img/5.jpg"
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6690",
+                "lng": "50.8430",
+                "messages": [
+                    {
+                        "title": "Релакс в саду скульптур",
+                        "body": "Речь про Сквер Национальной Галереи Республики Коми! Здесь так тихо и спокойно, а здешние скульптуры - услада для очей!",
+                        "img": [
+                            "img/6.jpg",
+                            "img/7.jpg",
+                            "img/8.jpg",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6663",
+                "lng": "50.8285",
+                "messages": [
+                    {
+                        "title": "Сквер под часами - новое пространство",
+                        "body": "После проекта по благоустройству территорий здесь появилось много качелей и скамеек, поэтому в тёплую и сухую погоду здесь всегда много людей, особенно подростков с мячами. Повезло, что было малолюдно!",
+                        "img": [
+                            "img/9.jpg",
+                            "img/10.jpg",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6722",
+                "lng": "50.8382",
+                "messages": [
+                    {
+                        "title": "Национальная библиотека",
+                        "body": "Библиотека преобразилась после реконструкции - и снаружи, и внутри! Летом красиво, а зимой - как сказочный дворец!",
+                        "img": [
+                            "img/11.jpg",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6325",
+                "lng": "50.8327",
+                "messages": [
+                    {
+                        "title": "Взлёты и посадки",
+                        "body": "С этой точки возможно сделать прекрасные кадры посадки или взлёта самолётов. Увидеть так близко брюхо самолёта в воздухе можно только тут.",
+                        "img": [
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6748",
+                "lng": "50.8475",
+                "messages": [
+                    {
+                        "title": "Старая пристань",
+                        "body": "Живописный вид, идеально для пленэров!",
+                        "img": [
+                            "img/12.jpg",
+                            "img/13.jpg",
+                            "img/14.jpg",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "63.5602",
+                "lng": "53.6613",
+                "messages": [
+                    {
+                        "title": "Мост с рыбами",
+                        "body": "Под мостом через речку есть несколько медных рыб. Вечером мост светится.",
+                        "img": [
+                            "img/15.jpg",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "63.5540",
+                "lng": "53.6912",
+                "messages": [
+                    {
+                        "title": "Детский парк",
+                        "body": "Прекрасное место для отдыха всей семьёй. Здесь есть много разнообразных горок как для малышей, так и для детей постарше, сцена для выступлений, зоопарк. Большое количество сосен придают этому парку особую атмосферу. Здесь красиво как зимой, так и летом.",
+                        "img": [
+                            "img/16.jpg",
+                            "img/17.jpg",
+                            "img/18.jpg",
+                            "img/19.jpg",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6864",
+                "lng": "53.6782",
+                "messages": [
+                    {
+                        "title": "Святыни села Усть-Кулом",
+                        "body": "Повезло съездить сюда в такую солнечную погоду! С одного места открывается взор на два храма, один, правда, достраивается.",
+                        "img": [
+                            "img/20.jpg",
+                            "img/21.jpg",
+                            "img/22.jpg",
+                            "img/23.jpg",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.8247",
+                "lng": "53.5550",
+                "messages": [
+                    {
+                        "title": "Красота села Ульяново",
+                        "body": "На вершине холма у входа в монастырь в хорошую солнечную и тёплую погоду, понимаешь, что строители монастыря не зря выбрали это место! Взору открывается такой простор и покой! Не хочется отсюда уезжать.",
+                        "img": [
+                            "img/24.jpg",
+                            "img/25.jpg",
+                            "img/26.jpg",
+                        ]
+                    }
+                ]
+            },
+        ];
+
+        var params = window.location.search.substr(1);
+        var index = params.replace('mes=', '');
+        var message = data[index];
+        document.getElementById('h1').innerText += ' ' + message.messages.length;
+        var main_content_div = document.getElementById('main-content-div');
+        document.getElementById('h2').innerText += ' ' + message.lat + ', ' + message.lng;
+        var inner_content = '<div class="grid grid-cols-12 gap-2">' + 
+            '<div class="flex grid justify-center items-center">' + 
+                '<button id="prev" onclick="prev()" disabled>' + 
+                    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 fill-none stroke-gray-500">' +
+                        '<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />' + 
+                    '</svg>' + 
+                '</button>' + 
+            '</div>' + 
+            '<div class="border border-black border-2 rounded-md col-span-10">' + 
+                '<div class="flex flex-wrap justify-end">' + 
+                    '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-12 h-12 ps-2 pt-2">' +
+                        '<path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5" />' +
+                    '</svg>' + 
+                    '<span id="num" class="text-5xl font-light px-1">' + 1 + '</span>' + 
+                '</div>' + 
+                '<div>' +
+                    '<h3 id="h3" class="text-3xl px-2 font-bold text-center underline underline-offset-4 decoration decoration-red-500 tracking-wide decoration-wavy">' + message.messages[0].title + '</h3>' +
+                '</div>' +
+                '<div id="content" class="px-2 py-4 text-center text-md font-light tracking-widest">' + message.messages[0].body + '</div>' +
+                '<div id="img-content" class="p-2 flex flex-wrap justify-center">';
+        if(message.messages[0].img.length > 0)
+        {
+            for (i = 0; i < message.messages[0].img.length; i++)
+            {
+                inner_content += '<div class="m-1"><a href="../' + message.messages[0].img[i] + '" target="_blank"><img src="../' + message.messages[0].img[i] + '" alt="" style="height: 200px"></a></div>';
+            }
+        } 
+        inner_content += '</div>' +
+                '</div>' +
+                '<div class="flex grid justify-center items-center">';
+        if (message.messages.length - 1 == 0)
+        {
+            console.log(0);
+            inner_content += '<button id="next" onclick="next()" disabled>'
+                        + '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 fill-none stroke-gray-500">';
+        }
+        else
+        {
+            inner_content += '<button id="next" onclick="next()">' + 
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 fill-none stroke-black">';
+        }
+        inner_content +=  
+                            '<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />' + 
+                        '</svg>' + 
+                    '</button>' +
+                '</div>' +
+            '</div>';
+        document.getElementById('main-content-div').innerHTML = inner_content;
+
+        function next()
+        {
+            new_index = parseInt(document.getElementById('num').innerText);
+            if (new_index + 1 == message.messages.length)
+            {
+                document.getElementById('next').disabled = true;
+                document.getElementById('next').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 fill-none stroke-gray-500">' + 
+                    '<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />' + 
+                '</svg>';
+            }
+            document.getElementById('num').innerText = new_index + 1;
+            document.getElementById('h3').innerText = message.messages[new_index].title;
+            document.getElementById('content').innerHTML = message.messages[new_index].body;
+            document.getElementById('prev').disabled = false;
+            document.getElementById('prev').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 fill-none stroke-black">' +
+                    '<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />' +
+                '</svg>';
+            img_content = '';
+            if (message.messages[new_index].img.length > 0)
+            {
+                for (i = 0; i < message.messages[new_index].img.length; i++)
+                {
+                    img_content += '<div class="m-1"><a href="../' + message.messages[new_index].img[i] + '" target="_blank"><img src="../' + message.messages[new_index].img[i] + '" alt="" style="height: 200px"></a></div>';
+                }
+            }
+            
+            document.getElementById('img-content').innerHTML = img_content;
+        }
+
+        function prev() 
+        {
+            new_index = parseInt(document.getElementById('num').innerText) - 1;
+            if (new_index - 1 == 0)
+            {
+                document.getElementById('prev').disabled = true;
+                document.getElementById('prev').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 fill-none stroke-gray-500">' + 
+                    '<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />' + 
+                '</svg>';
+            }
+            document.getElementById('num').innerText = new_index;
+            document.getElementById('h3').innerText = message.messages[new_index - 1].title;
+            document.getElementById('content').innerHTML = message.messages[new_index - 1].body;
+            document.getElementById('next').disabled = false;
+            document.getElementById('next').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 fill-none stroke-black">' +
+                    '<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />' +
+                '</svg>';
+            img_content = '';
+            if (message.messages[new_index - 1].img.length > 0)
+            {
+                for (i = 0; i < message.messages[new_index - 1].img.length; i++)
+                {
+                    img_content += '<div class="m-1"><a href="../' + message.messages[new_index - 1].img[i] + '" target="_blank"><img src="../' + message.messages[new_index - 1].img[i] + '" alt="" style="height: 200px"></a></div>';
+                }
+            }
+            document.getElementById('img-content').innerHTML = img_content;
+        }
+        console.log();
+    </script>
+</body>
+</html>

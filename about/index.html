@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./../style.css">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: 'versatile';
+            src: url('./../fonts/Versatile-Rust-Bold.otf');
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- шапка сайта -->
+        <div class="fixed w-full bg-lime-300 border-b-2 border-black p-3 z-10">
+            <nav class="items-center container mx-auto">
+                <div class="flex flex-wrap justify-between w-full">      
+                    <a href="../index.html" class="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 fill-red-500 stroke-black">
+                            <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>                          
+                        <span class="self-center text-2xl md:text-3xl whitespace-nowrap text-black main-title uppercase tracking-wide underline decoration-dashed underline-offset-4 decoration-2 decoration-black hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-red-800 hover:text-red-800">
+                            ЛОКАЦИЯ
+                        </span>
+                    </a>
+                    <ul class="flex flex-col md:p-0 font-medium md:flex-row md:space-x-8 md:mt-0 md:border-0">
+                        <li>
+                            <a href="./index.html" class="block py-2 pr-4 main-font font-bold uppercase hover:underline hover:underline-offset-2 hover:decoration-2 hover:decoration-black" aria-current="page">О проекте</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- конец шапки сайта -->
+        <!-- основной контент -->
+        <div class="bg-yellow-100">
+            <div class="container max-md:px-3 mx-auto" style="min-height: calc( 100vh - 49.62px )">
+                <div class="py-10"></div>
+                <div class="m-2 py-2 divide-y-4 divide-dashed divide-black">
+                    <div class="flex justify-center mb-5">
+                        <h1 class="font-bold text-3xl md:text-4xl text-center">
+                            Твой туристический помощник - 
+                            <br> сервис
+                            <span class="underline underline-offset-4 decoration decoration-red-500 decoration-wavy">
+                                Локация
+                            </span>
+                        </h2>
+                    </div>
+                    <div class="py-5 text-center">
+                        <p class="text-xl font-bold">Проект выполнен в рамках учебно-инновационной лаборатории «Полигон инновационных идей» Сыктывкарского лесного института</p>
+                    </div>
+                    <div class="py-5 text-center">
+                        <p class="text-xl font-bold">Автор проекта:</p>
+                        <p class="text-xl font-bold">Игорь Сивков, ученик 11 класса МАОУ СОШ №21</p>
+                        <p class="text-xl font-bold">Руководитель-наставник и главный разработчик:</p>
+                        <p class="text-xl font-bold">Мальцева Софья, студентка 4 курса направления подготовки «Информационые системы и технологии» Сыктывкарского лесного института</p> 
+                        <p class="text-xl font-bold">Руководитель-наставник и идейный вдохновитель:</p>
+                        <p class="text-xl font-bold">Никифорова Полина, студентка 4 курса направления подготовки «Информационые системы и технологии» Сыктывкарского лесного института</p>
+                    </div>
+                </div>
+            </div>
+            <!-- подвал -->
+            <footer class="">
+                <div class="w-full bg-lime-300 border-t-2 border-black p-3">
+                    <div class="container mx-auto">
+                        <div class="uppercase font-bold flex flex-wrap justify-between">
+                            <span>2023</span> 
+                            <span>СЛИ</span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- конец подвала -->
+        </div>
+        <!-- конец основного контента -->
+    </main>
+</body>
+</html>

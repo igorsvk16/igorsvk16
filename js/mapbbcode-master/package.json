@@ -1,0 +1,30 @@
+{
+  "name": "mapbbcode",
+  "version": "1.2.1-dev",
+  "description": "JavaScript library for [map] BBCode parsing, displaying and editing",
+  "devDependencies": {
+    "leaflet": "git://github.com/Leaflet/Leaflet.git",
+    "leaflet-draw": "git://github.com/Leaflet/Leaflet.draw.git",
+    "jshint": "~2.3.0",
+    "uglify-js": "~2.4.0",
+    "request": "~2.16.2",
+    "js-yaml": "~2.0.3",
+    "jake": "~0.7.2"
+  },
+  "main": "dist/mapbbcode-src.js",
+  "scripts": {
+    "prepublish": "jake"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MapBBCode/mapbbcode.git"
+  },
+  "keywords": [
+    "map",
+    "bbcode",
+    "leaflet"
+  ],
+  "author": "Ilya Zverev",
+  "license": "WTFPL",
+  "readmeFilename": "README.md"
+}

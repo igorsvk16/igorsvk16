@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="js\mapbbcode-master/dist/lib/leaflet.css" />
+    <link rel="stylesheet" href="js\mapbbcode-master/dist/lib/leaflet.draw.css" />
+    <script src="js\mapbbcode-master/dist/lib/leaflet.js"></script>
+    <script src="js\mapbbcode-master/dist/lib/leaflet.draw.js"></script>
+
+    <script src="js\mapbbcode-master/src/MapBBCode.js"></script>
+    <script src="js\mapbbcode-master/src/MapBBCodeUI.js"></script>
+    <script src="js\mapbbcode-master/src/MapBBCodeUI.Editor.js"></script>
+    <script src="js\mapbbcode-master/src/images/EditorSprites.js"></script>
+    <script src="js\mapbbcode-master/src/controls/FunctionButton.js"></script>
+    <script src="js\mapbbcode-master/src/controls/LetterIcon.js"></script>
+    <script src="js\mapbbcode-master/src/controls/PopupIcon.js"></script>
+    <script src="js\mapbbcode-master/src/controls/Leaflet.Search.js"></script>
+    <script src="js\mapbbcode-master/src/controls/PermalinkAttribution.js"></script>
+    <script src="js\mapbbcode-master/src/controls/StaticLayerSwitcher.js"></script>
+    <script src="js\mapbbcode-master/src/handlers/Handler.Text.js"></script>
+    <script src="js\mapbbcode-master/src/handlers/Handler.Color.js"></script>
+    <script src="js\mapbbcode-master/src/handlers/Handler.Width.js"></script>
+    <script src="js\mapbbcode-master/src/handlers/Handler.Measure.js"></script>
+    <script src="js\mapbbcode-master/src/strings/English.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+    <title>Сервис Локация - поделись координатами любимых мест</title>
+    <style>
+        @font-face {
+            font-family: 'versatile';
+            src: url('fonts/Versatile-Rust-Bold.otf');
+        }
+        .leaflet-top.leaflet-right {
+            visibility: none;
+            display: none;
+        }
+        .select2-selection .select2-selection--single {
+            background-color: #046032;
+        }
+        .select2-container--default .select2-selection--single {
+            background-color: #fef9c3;
+            border: 1px solid black;
+            height: 40px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .select2-container--default 
+        .select2-selection--single 
+        .select2-selection__arrow {
+            top: 7px;
+            width: 30px;
+        }
+        .select2-dropdown {
+            background-color: #fef9c3;
+            border: 1px solid black;
+        }
+        .select2-container--default 
+        .select2-search--dropdown 
+        .select2-search__field {
+            background-color: #fef9c3;
+            border: 1px solid black;
+        }
+        :focus-visible {
+            outline: -webkit-focus-ring-color auto 0px;
+        }
+        .select2-container--default .select2-results__option--selected {
+            background-color: #fef9c3;
+        }
+        .select2-container--default 
+        .select2-results__option--highlighted.select2-results__option--selectable {
+            background-color: #9acd32;
+            color: black;
+        }
+        #overlay {
+            z-index: 80;
+            background-color: #64748b;
+            position: fixed;
+            top: 0px;
+            opacity: 0.4;
+            width: 100%;
+            height: 100%;
+            display: none;
+            left: 0px;
+        }
+        .popup {
+            position: fixed;
+            display: none;
+            opacity: 0;
+            z-index: 2000;
+        }
+        span[data-trix-button-group="block-tools"] {
+            display: none;
+        }
+        span[data-trix-button-group="file-tools"] {
+            display: none;
+        }
+        button[data-trix-attribute="href"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- шапка сайта -->
+        <div class="fixed w-full bg-lime-300 border-b-2 border-black p-3 z-10">
+            <nav class="items-center container mx-auto">
+                <div class="flex flex-wrap justify-between w-full">      
+                    <a href="./index.html" class="flex items-center">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="w-8 h-8 fill-red-500 stroke-black">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                        </svg> -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 fill-red-500 stroke-black">
+                            <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>                          
+                        <span class="self-center decoration-dashed text-2xl md:text-3xl whitespace-nowrap text-black main-title uppercase tracking-wide underline underline-offset-4 decoration-2 decoration-black hover:underline hover:underline-offset-4 hover:decoration-2 hover:decoration-red-800 hover:text-red-800">
+                            ЛОКАЦИЯ
+                        </span>
+                    </a>
+                    <ul class="flex flex-col md:p-0 font-medium md:flex-row md:space-x-8 md:mt-0 md:border-0">
+                        <li>
+                            <a href="./about/index.html" class="block py-2 pr-4 main-font font-bold uppercase hover:underline hover:underline-offset-2 hover:decoration-2 hover:decoration-black" aria-current="page">О проекте</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- конец шапки сайта -->
+        <!-- основной контент -->
+        <div class="bg-yellow-100">
+            <div class="container max-md:px-3 mx-auto" style="min-height: calc( 100vh - 49.62px )">
+                <div class="py-10"></div>
+                <div class="m-2 py-2 flex">
+                    <h1 class="font-bold text-3xl">
+                        Поиск отзывов о самых разных местах
+                    </h1>
+                </div>
+                <div class="w-full grid grid-cols-2 md:grid-cols-12 gap-3">
+                    <div class="col-span-2 md:col-span-4 mx-2">
+                        <select name="type" onchange="run()" id="types" class="h-10 geo-select" style="width: 100%;">
+                            <option value="1">Найти по координатам</option>
+                            <option value="2" selected>Найти по городу</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2 md:col-span-4 mx-2">
+                        <div id="city" class="w-full">
+                            <select id="city_mark" onchange="city()" class="h-10 geo-select" style="width: 100%;">
+                                <option value="61.67,50.83">Сыктывкар, Коми</option>
+                                <option value="63.56,53.69">Ухта, Коми</option>
+                                <option value="62.36,50.08">Микунь, Коми</option>
+                                <option value="67.50,64.05">Воркута, Коми</option>
+                                <option value="66.04,60.13">Инта, Коми</option>
+                                <option value="61.69,53.69">Усть-Кулом, Коми</option>
+                                <option value="63.84,57.30">Вуктыл, Коми</option>
+                                <option value="65.12,57.17">Печора, Коми</option>
+                                <option value="63.00,57.56">Усинск, Коми</option>
+                                <option value="63.59,53.93">Сосногорск, Коми</option>
+                                <option value="62.60,50.89">Емва, Коми</option>
+                                <option value="65.44,52.16">Усть-Цильма, Коми</option>
+                            </select>
+                        </div>
+                        <div id="geo" class="w-full" style="display: none;">
+                            <div class="w-full grid gap-3 grid-cols-2 h-10">
+                                <div class="me-2 md:mx-2">
+                                    <input type="text" id="sh" class="h-10 w-full bg-yellow-100 border border-black rounded-md px-2" placeholder="ШШ.ШШШШ">
+                                </div>
+                                <div class="ms-2 md:mx-2">
+                                    <input type="text" id="d" class="h-10 w-full bg-yellow-100 border border-black rounded-md px-2" placeholder="ДД.ДДДД">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mx-2 col-span-1 md:col-span-2 bg-lime-500 hover:bg-lime-400 transition duration-300 text-center border cursor-pointer border-black rounded-md">
+                        <button onclick="change()" type="submit" class="w-full my-1.5">Найти</button>
+                    </div>
+                    <div class="mx-2 col-span-1 md:col-span-2 bg-lime-500 text-center border border-black rounded-md hover:bg-lime-400 transition duration-300">
+                        <button onclick="clear_map()" id="clear" disabled type="submit" class="w-full my-1.5">Очистить</button>
+                    </div>
+                </div>
+                <!-- карта -->
+                <div class="my-2">
+                    <div class="w-full grid grid-cols-1 gap-3 map-border">
+                        <div class="mx-2">
+                            <textarea id="code" style="display: none; border:black"></textarea>
+                            <div id="test" class="border border-black text-center" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 py-2 flex justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="max-md:hidden w-6 h-6 mt-1 fill-black">
+                        <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg> 
+                    <h2 class="font-bold text-3xl md:text-2xl text-center">
+                        Хотите поделиться своими впечатлениями? <a role="button" id="start" class="underline underline-offset-4 decoration decoration-red-500 decoration-wavy hover:text-red-500">Жмите сюда.</a>
+                    </h2>
+                </div>
+            </div>
+            <!-- подвал -->
+            <footer class="">
+                <div class="w-full bg-lime-300 border-t-2 border-black p-3">
+                    <div class="container mx-auto">
+                        <div class="uppercase font-bold flex flex-wrap justify-between">
+                            <span>2023</span> 
+                            <span>СЛИ</span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- конец подвала -->
+        </div>
+        <!-- конец основного контента -->
+        <!-- всплывающие окна -->
+        <div id="create" class="w-full justify-center popup">
+            <div class="grid gap-0 sm:grid-cols-5 max-xs:grid-cols-1">
+                <div></div>
+                <div class="rounded-md border border-black bg-yellow-100 sm:col-span-3 p-2 mx-2">
+                    <div class="flex justify-end">
+                        <button id="close">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>                         
+                    </div>
+                    <div class="py-1">
+                        <h3 class="text-center text-2xl font-bold underline underline-offset-4 decoration decoration-red-500 decoration-wavy">
+                            Поделитесь локацией
+                        </h3>
+                    </div>
+                    <div class="text-md mt-2">Координаты (с точностью до 4 знаков)</div>
+                    <div class="py-2 flex">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 mt-1 fill-red-500 stroke-black">
+                            <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                        </svg>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="w-full col-span-2 grid gap-3 grid-cols-2 h-10">
+                                <div class="me-2 md:mx-2">
+                                    <input type="text" class="h-10 w-full bg-yellow-100 border border-black rounded-md px-2" placeholder="ШШ.ШШШШ">
+                                </div>
+                                <div class="ms-2 md:mx-2">
+                                    <input type="text" class="h-10 w-full bg-yellow-100 border border-black rounded-md px-2" placeholder="ДД.ДДДД">
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="text-md mt-2">Заголовок (не более 100 символов)</div>
+                    <div class="py-2 w-full">
+                        <input type="text" class="h-10 w-full bg-yellow-100 border border-black rounded-md px-2" maxlength="100">
+                    </div>
+                    <div class="text-md mt-2">Впечатление - текст (не более 1000 символов)</div>
+                    <div class="py-2 w-full">
+                        <textarea class="w-full bg-yellow-100 border border-black rounded-md px-2" id="" style="min-height: 40px; max-height: 100px;" maxlength="1000"></textarea>
+                    </div>
+                    <div class="text-md mt-2">Картинки (макс. кол-во - 5)
+                    </div>
+                    <div class="grid grid-cols-3 gap-0 mb-3 py-2">
+                        <div class="col-span-2 me-2">
+                            <input class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-black bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-black transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-lime-500 file:px-3 file:py-[0.32rem] file:text-black file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-lime-300 focus:border-primary focus:text-black focus:shadow-te-primary focus:outline-none"
+                            type="file"
+                            accept="image/*"
+                            multiple />
+                        </div>
+                        <div class="bg-lime-500 hover:bg-lime-300 border border-black rounded-md ms-2 transition duration-300">
+                            <button class="w-full h-8">Добавить</button>
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+            </div>
+        </div>
+        <div id="overlay"></div>
+    </main>
+    
+    <script>
+        var mapBB = new MapBBCode({
+            defaultPosition: [61.67, 50.83],
+            defaultZoom: 12,
+            preferStandardLayerSwitcher: true,
+            viewWidth: $('.map-border').width,
+            viewHeight: 300,
+        });
+        var data = [
+            {
+                "lat": "61.6722",
+                "lng": "50.8344",
+                "messages": [
+                    {
+                        "title": "Самый лучший институт",
+                        "body": "Кузница инженерных кадров",
+                        "img": [
+                            "img/1.png"
+                        ]
+                    },
+                    {
+                        "title": "Студенческое научное объединение",
+                        "body": "Рекомендую студентам СЛИ вступать в СНО и участвовать в конференциях и интеллектуальных играх. Это отличная возможность получить навыки в написании научных работ и развить собственный проект! (фото Николая Мишарина, СЛИ)",
+                        "img": [
+                            "img/2.png",
+                            "img/3.png"
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6592",
+                "lng": "50.8217",
+                "messages": [
+                    {
+                        "title": "Белки в Мичуринском парке",
+                        "body": "Неожиданное зрелище: сразу две белки в парке в ноябре! Всем, кто любит фотоохоту, рекомендую ловить момент)",
+                        "img": [
+                            "img/4.png",
+                            "img/5.png"
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6690",
+                "lng": "50.8430",
+                "messages": [
+                    {
+                        "title": "Релакс в саду скульптур",
+                        "body": "Речь про Сквер Национальной Галереи Республики Коми! Здесь так тихо и спокойно, а здешние скульптуры - услада для очей!",
+                        "img": [
+                            "img/6.png",
+                            "img/7.png",
+                            "img/8.png",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6663",
+                "lng": "50.8285",
+                "messages": [
+                    {
+                        "title": "Сквер под часами - новое пространство",
+                        "body": "После проекта по благоустройству территорий здесь появилось много качелей и скамеек, поэтому в тёплую и сухую погоду здесь всегда много людей, особенно подростков с мячами. Повезло, что было малолюдно!",
+                        "img": [
+                            "img/9.png",
+                            "img/10.png",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6722",
+                "lng": "50.8382",
+                "messages": [
+                    {
+                        "title": "Национальная библиотека",
+                        "body": "Библиотека преобразилась после реконструкции - и снаружи, и внутри! Летом красиво, а зимой - как сказочный дворец!",
+                        "img": [
+                            "img/11.png",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6325",
+                "lng": "50.8327",
+                "messages": [
+                    {
+                        "title": "Взлёты и посадки",
+                        "body": "С этой точки возможно сделать прекрасные кадры посадки или взлёта самолётов. Увидеть так близко брюхо самолёта в воздухе можно только тут.",
+                        "img": [
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6748",
+                "lng": "50.8475",
+                "messages": [
+                    {
+                        "title": "Старая пристань",
+                        "body": "Живописный вид, идеально для пленэров!",
+                        "img": [
+                            "img/12.png",
+                            "img/13.png",
+                            "img/14.png",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "63.5602",
+                "lng": "53.6613",
+                "messages": [
+                    {
+                        "title": "Мост с рыбами",
+                        "body": "Под мостом через речку есть несколько медных рыб. Вечером мост светится.",
+                        "img": [
+                            "img/15.png",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "63.5540",
+                "lng": "53.6912",
+                "messages": [
+                    {
+                        "title": "Детский парк",
+                        "body": "Прекрасное место для отдыха всей семьёй. Здесь есть много разнообразных горок как для малышей, так и для детей постарше, сцена для выступлений, зоопарк. Большое количество сосен придают этому парку особую атмосферу. Здесь красиво как зимой, так и летом.",
+                        "img": [
+                            "img/16.png",
+                            "img/17.png",
+                            "img/18.png",
+                            "img/19.png",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.6864",
+                "lng": "53.6782",
+                "messages": [
+                    {
+                        "title": "Святыни села Усть-Кулом",
+                        "body": "Повезло съездить сюда в такую солнечную погоду! С одного места открывается взор на два храма, один, правда, достраивается.",
+                        "img": [
+                            "img/20.png",
+                            "img/21.png",
+                            "img/22.png",
+                            "img/23.png",
+                        ]
+                    }
+                ]
+            },
+            {
+                "lat": "61.8247",
+                "lng": "53.5550",
+                "messages": [
+                    {
+                        "title": "Красота села Ульяново",
+                        "body": "На вершине холма у входа в монастырь в хорошую солнечную и тёплую погоду, понимаешь, что строители монастыря не зря выбрали это место! Взору открывается такой простор и покой! Не хочется отсюда уезжать.",
+                        "img": [
+                            "img/24.png",
+                            "img/25.png",
+                            "img/26.png",
+                        ]
+                    }
+                ]
+            },
+        ];
+        var str_map = "";
+        for (i = 0; i < data.length; i++)
+        {
+            if (i == 0) 
+            {
+                str_map = str_map + data[i].lat + ',' + data[i].lng + '(<a href="messages/index.html?mes=' + i + '" role="button">отзывов: ' + data[i].messages.length + ' </a>)';
+            }
+            else 
+            {
+                str_map = str_map + '; ' + data[i].lat + ',' + data[i].lng + '(<a href="messages/index.html?mes=' + i + '" role="button">отзывов: ' + data[i].messages.length + ' </a>)';
+            }
+            console.log(str_map);
+        }
+        document.getElementById('code').value = "[map=13,61.67,50.83]" + str_map + "[/map]";
+        var show = mapBB.show('test', document.getElementById('code').value);
+
+        function run() {
+            if (document.getElementById('types').value == 1) {
+                console.log(document.getElementById('types'));
+                $("#city").css("display", "none");
+                $("#geo").css("display", "flex");
+            }
+            else {
+                console.log(document.getElementById('types'));
+                $("#city").css("display", "flex");
+                $("#geo").css("display", "none");
+            }
+        }
+
+        function city() {
+            var map = document.getElementById('code');
+            map.value = '[map=13,' + document.getElementById('city_mark').value + ']' + str_map + '[/map]';
+            var show = mapBB.show('test', document.getElementById('code').value);
+        }
+
+        function change() {
+            var sh = document.getElementById('sh');
+            var d = document.getElementById('d');
+            var map = document.getElementById('code');
+            var clear = document.getElementById('clear');
+            if (sh.value && d.value) {
+                map.value = '[map=15,' + sh.value + ',' + d.value + ']' + sh.value + ',' + d.value + ' (X); ' + str_map + '[/map]';
+                console.log(str_map);
+                clear.disabled = false;
+                var show = mapBB.show('test', document.getElementById('code').value);
+            }
+        }
+
+        function clear_map()
+        {
+            var sh = document.getElementById('sh');
+            var d = document.getElementById('d');
+            var map = document.getElementById('code');
+            var clear = document.getElementById('clear');
+            sh.value = '';
+            d.value = '';
+            clear.disabled = true;
+            map.value = "[map=13,61.67,50.83]" + str_map + "[/map]";
+            var show = mapBB.show('test', document.getElementById('code').value);
+        }
+        $(".leaflet-top.leaflet-right").css("visibility", "hidden");
+        $(".select2-container--default .select2-selection--single").css("background-color", "#046032");
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.geo-select').select2();
+        });
+    </script>
+    <script>
+        $('a#start').click( function(event){
+            console.log('1'); 
+            event.preventDefault(); 
+            $('#overlay').fadeIn(250, 
+                function(){
+                    $('#create') 
+                        .css('display', 'block') 
+                        .animate({opacity: 1, top: '5%'}, 490); 
+            });
+        });
+        $('#close, #overlay').click( function(){ 
+            $('#create')
+                .animate({opacity: 0, top: '40%'}, 490, 
+                    function(){ 
+                        $(this).css('display', 'none'); 
+                        $('#overlay').fadeOut(220); 
+                    }
+                );
+        });
+    </script>
+</body>
+</html>
